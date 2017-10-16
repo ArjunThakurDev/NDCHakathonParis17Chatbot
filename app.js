@@ -32,7 +32,7 @@ bot.dialog('showShirts', function (session) {
             .title("Classic White T-Shirt")
             .subtitle("100% Soft and Luxurious Cotton")
             .text("Price is $25 and carried in sizes (S, M, L, and XL)")
-            .images([builder.CardImage.create(session, 'http://petersapparel.parseapp.com/img/whiteshirt.png')])
+            .images([builder.CardImage.create(session, 'https://rukminim1.flixcart.com/image/832/832/j7qi9ow0/shirt/h/h/e/m-ms17f0-97-metronaut-original-imaexwg7nkryhkq9.jpeg?q=70')])
             .buttons([
                 builder.CardAction.imBack(session, "buy classic white t-shirt", "Buy")
             ]),
@@ -40,7 +40,7 @@ bot.dialog('showShirts', function (session) {
             .title("Classic Gray T-Shirt")
             .subtitle("100% Soft and Luxurious Cotton")
             .text("Price is $25 and carried in sizes (S, M, L, and XL)")
-            .images([builder.CardImage.create(session, 'http://petersapparel.parseapp.com/img/grayshirt.png')])
+            .images([builder.CardImage.create(session, 'https://rukminim1.flixcart.com/image/312/312/shirt/g/e/d/hlsh008882-light-blue-highlander-s-original-imaejy6fp2zghrxe.jpeg?q=70')])
             .buttons([
                 builder.CardAction.imBack(session, "buy classic gray t-shirt", "Buy")
             ])
