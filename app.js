@@ -1,7 +1,21 @@
 var restify = require('restify');
 var builder = require('botbuilder');
-var fs = require('fs');
-var flightItineraryCard = JSON.parse(fs.readFileSync('FlightItinerary.json', 'utf8'));
+var azure = require('botbuilder-azure');
+
+var documentDbOptions = {
+    host: 'https://ndchakathonparis17db.documents.azure.com:443/',
+    masterKey: '6hdn7dTNoxUPHXv0JBCsSkxGWWzX0YE6IrxDsonauR8tHZCHoHvC9ibUxo60Bcb2UNQg2zF0HhpR60Ri2g0Mvw==',
+    database: 'botdocs',
+    collection: 'botdata'
+};
+
+var usernameInt;
+var UserNameKey = 'UserName';
+var usernameSocial = 'FacebookID';
+
+var docDbClient = new azure.DocumentDbClient(documentDbOptions);
+
+var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -20,13 +34,42 @@ server.post('/api/messages', connector.listen());
 
 
 var bot = new builder.UniversalBot(connector, function (session) {
+    var userName = session.userData[UserNameKey];
+    if (!userName) {
+        return session.beginDialog('login');
+    }
     session.send("Hi... We sell shirts. Say 'show shirts' to see our products.");
-});
+}).set('storage', cosmosStorage);
+bot.set('persistConversationData', true);
+
+
+//////////////////////////////////////////////////////////////////////////
+bot.dialog('login', [function (session, args, next) {
+    if (session.message.source) {
+        session.send(session.message.source);
+    }
+    builder.Prompts.text(session, "Please identify yourself!!");
+},
+function (session, results) {
+    console.log("Emp ID" + results.response);
+    session.userData[UserNameKey] = results.response;
+    builder.Prompts.text(session, "Thanks for loging %s", session.userData[UserNameKey]);
+    builder.Prompts.text(session, "How you want to help us");
+},
+function (session, results) {
+    console.log("Emp ID" + results.response);
+    session.userData[UserNameKey] = results.response;
+    session.endDialog("Thanks for loging %s", session.userData[UserNameKey]);
+}
+]).triggerAction({ matches: /^(login)/i });
+
+//////////////////////////////////////////////////////////////////////////
 
 // Add dialog to return list of shirts available
 bot.dialog('showShirts', function (session) {
     var msg = new builder.Message(session);
-    msg.attachmentLayout(builder.AttachmentLayout.carousel)
+    session.conversationData[username] = "Seattle",
+        msg.attachmentLayout(builder.AttachmentLayout.carousel)
     msg.attachments([
         new builder.HeroCard(session)
             .title("Classic White T-Shirt")
@@ -34,6 +77,7 @@ bot.dialog('showShirts', function (session) {
             .text("Price is $25 and carried in sizes (S, M, L, and XL)")
             .images([builder.CardImage.create(session, 'https://rukminim1.flixcart.com/image/832/832/j7qi9ow0/shirt/h/h/e/m-ms17f0-97-metronaut-original-imaexwg7nkryhkq9.jpeg?q=70')])
             .buttons([
+
                 builder.CardAction.imBack(session, "buy classic white t-shirt", "Buy")
             ]),
         new builder.HeroCard(session)
@@ -49,6 +93,6 @@ bot.dialog('showShirts', function (session) {
 }).triggerAction({ matches: /^(show|list)/i });
 
 
-    
+
 
 
