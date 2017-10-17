@@ -45,8 +45,8 @@ bot.set('persistConversationData', true);
 
 //////////////////////////////////////////////////////////////////////////
 bot.dialog('login', [function (session, args, next) {
-    if (session.message.source) {
-        session.send(session.message.source);
+    if (session.message.user) {
+        session.send(session.message.user);
     }
     builder.Prompts.text(session, "Please identify yourself!!");
 },
