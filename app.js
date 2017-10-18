@@ -62,7 +62,7 @@ bot.dialog('login', [function (session, args, next) {
 },
 function (session, results) {
     console.log("Emp ID" + results.response);
-    session.userData[UserNameKey] = results.response;
+    session.userData[UserNameKey] = session.userData.first_name;
     builder.Prompts.text(session, "Thanks for loging %s", session.userData[UserNameKey]);
     builder.Prompts.text(session, "How you want to help us");
 },
