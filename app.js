@@ -1,7 +1,7 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 var azure = require('botbuilder-azure');
-
+var FBProfile = require('botbuilder-facebookextension');
 var documentDbOptions = {
     host: 'https://ndchakathonparis17db.documents.azure.com:443/',
     masterKey: '6hdn7dTNoxUPHXv0JBCsSkxGWWzX0YE6IrxDsonauR8tHZCHoHvC9ibUxo60Bcb2UNQg2zF0HhpR60Ri2g0Mvw==',
@@ -14,7 +14,7 @@ var UserNameKey = 'UserName';
 var usernameSocial = 'FacebookID';
 
 var docDbClient = new azure.DocumentDbClient(documentDbOptions);
-import { RetrieveUserProfile } from 'botbuilder-facebookextension';
+
 
 
 var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
@@ -46,7 +46,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
 }).set('storage', cosmosStorage);
 bot.set('persistConversationData', true);
 bot.use(  
-    RetrieveUserProfile({
+    FBProfile.RetrieveUserProfile({
         accessToken: pageaAcessToken,
         expireMinutes: 60, // OPTIONAL
         fields: ['first_name', 'last_name', 'gender'] // OPTIONAL
