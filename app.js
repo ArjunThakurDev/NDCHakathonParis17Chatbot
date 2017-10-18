@@ -56,7 +56,7 @@ bot.use(
 //////////////////////////////////////////////////////////////////////////
 bot.dialog('login', [function (session, args, next) {
     
-    session.send(`Hi ${session.userData.first_name} ${session.userData.last_name});
+    session.send(`Hi ${session.userData.first_name} ${session.userData.last_name}`);
     
     
 },
