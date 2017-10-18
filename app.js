@@ -14,8 +14,12 @@ var UserNameKey = 'UserName';
 var usernameSocial = 'FacebookID';
 
 var docDbClient = new azure.DocumentDbClient(documentDbOptions);
+import { RetrieveUserProfile } from 'botbuilder-facebookextension';
+
 
 var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
+var pageaAcessToken = "EAABsIS7VNNYBAM1nbo1ZBxm3UZBkG5F7CvL6mMDOVbUjLRl4ItOrZBGursNfAxtrntUObxZCCZBEKPzEGGltfMAIaxxX6il3txXloVzVuBNTk0kbcAokUY4KHxIO3DHWWQqHzYG13peIDhdce2g6rnvqg6czZAnKQ1KeZAFuiNjUgZDZD";
+ 
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -41,14 +45,20 @@ var bot = new builder.UniversalBot(connector, function (session) {
     session.send("Hi... We sell shirts. Say 'show shirts' to see our products.");
 }).set('storage', cosmosStorage);
 bot.set('persistConversationData', true);
-
+bot.use(  
+    RetrieveUserProfile({
+        accessToken: pageaAcessToken,
+        expireMinutes: 60, // OPTIONAL
+        fields: ['first_name', 'last_name', 'gender'] // OPTIONAL
+    })
+);
 
 //////////////////////////////////////////////////////////////////////////
 bot.dialog('login', [function (session, args, next) {
-    if (session.message.user) {
-        session.send(session.message.user);
-    }
-    builder.Prompts.text(session, "Please identify yourself!!");
+    
+    session.send(`Hi ${session.userData.first_name}!`);
+    
+    
 },
 function (session, results) {
     console.log("Emp ID" + results.response);
