@@ -49,14 +49,14 @@ bot.use(
     FBProfile.RetrieveUserProfile({
         accessToken: pageaAcessToken,
         expireMinutes: 60, // OPTIONAL
-        fields: ['first_name', 'last_name', 'gender','email'] // OPTIONAL
+        fields: ['first_name', 'last_name', 'gender','last_ad_referral'] // OPTIONAL
     })
 );
 
 //////////////////////////////////////////////////////////////////////////
 bot.dialog('login', [function (session, args, next) {
     
-    session.send(`Hi ${session.userData.first_name} ${session.userData.last_name}! your email id is ${session.userData.email}`);
+    session.send(`Hi ${session.userData.first_name} ${session.userData.last_name}! your email id is ${session.userData.last_ad_referral.ad_id}`);
     
     
 },
