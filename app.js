@@ -19,7 +19,7 @@ var docDbClient = new azure.DocumentDbClient(documentDbOptions);
 
 var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
 var pageaAcessToken = "EAABsIS7VNNYBAM1nbo1ZBxm3UZBkG5F7CvL6mMDOVbUjLRl4ItOrZBGursNfAxtrntUObxZCCZBEKPzEGGltfMAIaxxX6il3txXloVzVuBNTk0kbcAokUY4KHxIO3DHWWQqHzYG13peIDhdce2g6rnvqg6czZAnKQ1KeZAFuiNjUgZDZD";
- 
+
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -45,20 +45,20 @@ var bot = new builder.UniversalBot(connector, function (session) {
     session.send("Hi... We sell shirts. Say 'show shirts' to see our products.");
 }).set('storage', cosmosStorage);
 bot.set('persistConversationData', true);
-bot.use(  
+bot.use(
     FBProfile.RetrieveUserProfile({
         accessToken: pageaAcessToken,
         expireMinutes: 60, // OPTIONAL
-        fields: ['first_name', 'last_name', 'gender','last_ad_referral'] // OPTIONAL
+        fields: ['first_name', 'last_name', 'gender', 'last_ad_referral'] // OPTIONAL
     })
 );
 
 //////////////////////////////////////////////////////////////////////////
-bot.dialog('login', [function (session, args, next) {
-    
+bot.dialog('login', [function (session, results) {
+
     session.send(`Hi ${session.userData.first_name} ${session.userData.last_name}`);
-    session.send(session.message.sender.id);
-    
+    session.send(results.response);
+
 },
 function (session, results) {
     console.log("Emp ID" + results.response);
