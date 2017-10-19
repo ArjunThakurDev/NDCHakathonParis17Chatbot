@@ -54,10 +54,13 @@ bot.use(
 );
 
 //////////////////////////////////////////////////////////////////////////
+
 bot.dialog('login', [function (session, results) {
-
-    session.send(`Hi ${session.userData.first_name} ${session.userData.last_name}`);
-
+    session.send(session.message.address.channelId);
+    if (session.message.address.channelId === 'facebook') {
+        session.send(`Hi ${session.userData.first_name} ${session.userData.last_name}`);
+        session.send('How can I help you!!');
+    }
 },
 function (session, results) {
     console.log("Emp ID" + results.response);
@@ -77,8 +80,7 @@ function (session, results) {
 // Add dialog to return list of shirts available
 bot.dialog('showShirts', function (session) {
     var msg = new builder.Message(session);
-    session.conversationData[username] = "Seattle",
-        msg.attachmentLayout(builder.AttachmentLayout.carousel)
+    msg.attachmentLayout(builder.AttachmentLayout.carousel)
     msg.attachments([
         new builder.HeroCard(session)
             .title("Classic White T-Shirt")
