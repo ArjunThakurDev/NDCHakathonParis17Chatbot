@@ -57,7 +57,6 @@ bot.use(
 bot.dialog('login', [function (session, results) {
 
     session.send(`Hi ${session.userData.first_name} ${session.userData.last_name}`);
-    session.send(results.response);
 
 },
 function (session, results) {
