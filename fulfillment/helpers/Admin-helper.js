@@ -92,16 +92,12 @@ function create_cards(body, session_to_use) {
 
         var item = crew[i];
         var option = item.EmpId;
-        if(body[i].CompletionStatus)
-        url = "https://luisbotstorage.blob.core.windows.net/botcontainer/greenstrip.jpg"
-        else
-        url = "https://luisbotstorage.blob.core.windows.net/botcontainer/redstrip.jpg"
+       
         var card = new builder.HeroCard(session_to_use)
             .title(body[i].FirstName + body[i].LastName)
             .subtitle("Role : " + body[i].Role + "\n" + "Flight status : " + body[i].CompletionStatus)
             .images([
-                builder.CardImage.create(session_to_use, body[i].ProfilePic),
-                builder.CardImage.create(session_to_use, url)
+                builder.CardImage.create(session_to_use, body[i].ProfilePic),                
             ])
             .buttons([builder.CardAction.imBack(session_to_use, 'hotel for ' + body[i].UserID, 'hotel for ' + body[i].FirstName),
             builder.CardAction.imBack(session_to_use, ' flight for ' + body[i].UserID, 'flight for ' + body[i].FirstName)])
