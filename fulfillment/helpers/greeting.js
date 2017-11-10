@@ -35,11 +35,10 @@ module.exports = [
                         userrole = body[i].Role;
                     }
                     if (userrole === "Admin") {
-                        userdetails.push([{
-                            "Get All User details": {
-                                value: "show all users details",
-                            },
-                        }]);
+
+                        userdetails['Get All User details'] = {
+                            value: "show all users details",
+                        };
                     }
                 }
 
