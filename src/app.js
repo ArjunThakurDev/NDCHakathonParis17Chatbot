@@ -136,6 +136,7 @@ intents.onDefault((session, args) => {
 
     var fulfillment = builder.EntityRecognizer.findEntity(args.entities, 'fulfillment');
     if (fulfillment) {
+        console.log('My Commit');
         var speech = fulfillment.entity;
         console.log(`Address of the user is ${JSON.stringify(session.message)}`);
         session.send(speech);
