@@ -88,7 +88,9 @@ function create_cards(body, session_to_use, date, location) {
             .images([
                 builder.CardImage.create(session_to_use, body[i].hotepic)
             ])
-            .buttons([builder.CardAction.postBack(session_to_use, "tel:" + body[i].ContactNum, 'Call Hotel')]);
+            .buttons([
+                builder.CardAction.openUrl(session_to_use, "tel:" + body[i].ContactNum, "Call Hotel")
+        ]);
         cards.push(card);
     }
     console.log(cards);
