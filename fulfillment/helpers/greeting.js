@@ -49,15 +49,10 @@ module.exports = [
             }
 
         });
-
-
-
-
         /*         if (session.userData.first_name) {
         
                     builder.Prompts.text(session, `Hello ${session.userData.first_name}. :)`);
                 } */
-
     },
     // Check-in
     function (session, results) {
