@@ -49,7 +49,7 @@ module.exports = [
                 var msg = new builder.Message()
                     .attachmentLayout(builder.AttachmentLayout.carousel)
                     .address(address)
-                    .attachments(create_cards(body, session, object));
+                    .attachments(create_cards(body, session, myaddon));
                 session.endDialog(msg);
 
             }
