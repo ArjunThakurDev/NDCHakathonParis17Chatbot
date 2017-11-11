@@ -45,7 +45,7 @@ module.exports = [
                 }
                 else {
                     console.log("user is " + user);
-                   
+
                     for (var i = 0, len = body.length; i < len; i++) {
                         console.log("DB Users " + body[i].FirstName + body[i].LastName);
                         if (body[i].FirstName + body[i].LastName == user) {
@@ -88,15 +88,15 @@ function create_cards(body, session_to_use) {
     var cards = [];
     var url;
     for (i = 0; i < crew.length; i++) {
-
+        if (crew[i].Role === "Admin") { continue; }
         var item = crew[i];
         var option = item.EmpId;
-       
+
         var card = new builder.HeroCard(session_to_use)
             .title(body[i].FirstName + body[i].LastName)
             .subtitle("Role : " + body[i].Role + "\n" + "Flight status : " + body[i].CompletionStatus)
             .images([
-                builder.CardImage.create(session_to_use, body[i].ProfilePic),                
+                builder.CardImage.create(session_to_use, body[i].ProfilePic),
             ])
             .buttons([builder.CardAction.imBack(session_to_use, 'you have selected hotel details for ' + body[i].UserID, 'hotel for ' + body[i].FirstName),
             builder.CardAction.imBack(session_to_use, 'you have selected flight details for ' + body[i].UserID, 'flight for ' + body[i].FirstName)])
