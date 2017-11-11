@@ -87,6 +87,7 @@ function create_cards(body, session_to_use, date, location) {
 
         var item = crew[i];
         var option = item.EmpId;
+        console.log("Image:" + get_image_url(body[i].City));
         var card = new builder.HeroCard(session_to_use)
             .title(body[i].HotelName)
             .subtitle("Hotel Address : " + body[i].HotelAddress)
