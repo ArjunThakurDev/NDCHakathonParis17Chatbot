@@ -91,11 +91,10 @@ function create_cards(body, session_to_use, date, location) {
             .title(body[i].HotelName)
             .subtitle("Hotel Address : " + body[i].HotelAddress)
             .images([
-                builder.CardImage.create(session_to_use, body[i].hotepic)
+                builder.CardImage.create(session_to_use, get_image_url(body[i].City) )
             ])
             .buttons([
                 builder.CardAction.openUrl(session_to_use, "tel:" + body[i].ContactNum, "Call Hotel")
-
             ]);
         cards.push(card);
     }
@@ -104,21 +103,17 @@ function create_cards(body, session_to_use, date, location) {
 }
 
 function get_image_url(code) {
-    if (code === 'MEL') {
-
-        return 'http://www.cardatabase.net/modifiedairlinerphotos/photos/big/00014380.jpg';
-    }
-    if (code === 'CON') {
+    if (code === 'DEL') {
 
         return 'https://www.whatsuplife.in/gurgaon/blog/wp-content/uploads/2015/11/The-Leela-Ambience-Gurgaon-Hotel-Residences-Gurgaon-02.jpg';
     }
-    if (code === 'BAG') {
+    if (code === 'CHE') {
 
-        return 'https://dishccvmy41gl.cloudfront.net/spree/products/173/product_retina/Away_Large_Navy.jpg?1493120102https://s3-us-west-2.amazonaws.com/beachbody-blog/uploads/2016/05/mexican-meal-prep.jpg'
+        return 'https://luisbotstorage.blob.core.windows.net/botcontainer/gateway.jpg';
     }
-    if (code === 'SET') {
+    if (code === 'MUM') {
 
-        return 'https://i.pinimg.com/originals/c0/a6/09/c0a609801d296f340a04f0014bfc67fc.jpg';
+        return 'https://luisbotstorage.blob.core.windows.net/botcontainer/Leelamum.jpg'
     }
 }
 
