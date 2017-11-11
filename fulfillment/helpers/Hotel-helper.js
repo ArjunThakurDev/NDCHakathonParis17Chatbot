@@ -6,8 +6,8 @@ module.exports = [
         var entities = args.entities;
         var option_num = 0;
         var useridlocal;
-        var userdate="null";
-        var userloc="null";
+        var userdate = "null";
+        var userloc = "null";
         var flighturl;
         for (var i = 0, len = entities.length; i < len; i++) {
             if (entities[i].type === 'builtin.datetimeV2.date') {
@@ -17,7 +17,7 @@ module.exports = [
                 userloc = entities[i].resolution.values[0];
             }
         }
-        
+
         console.log("My Session: " + JSON.stringify(session.message.address));
         console.log("My USer Data: " + JSON.stringify(session.userData));
 
@@ -46,10 +46,10 @@ module.exports = [
                     }
                 }
                 console.assert("user id is " + useridlocal);
-            console.log('http://ghbotapi.azurewebsites.net/sasusers/' + useridlocal + '/hotel/'+userloc+'/'+userdate);
+                console.log('http://ghbotapi.azurewebsites.net/sasusers/' + useridlocal + '/hotel/' + userloc + '/' + userdate);
                 var offer_option = {
                     method: 'GET',
-                    url: 'http://ghbotapi.azurewebsites.net/sasusers/' + useridlocal + '/hotel/'+userloc+'/'+userdate,
+                    url: 'http://ghbotapi.azurewebsites.net/sasusers/' + useridlocal + '/hotel/' + userloc + '/' + userdate,
                     headers: {
                         'content-type': 'application/json'
                     },
@@ -59,14 +59,19 @@ module.exports = [
                     if (error) {
                         console.log('Offeres are not saved....');
                     } else {
-                        create_cards(body, session,userdate,userloc);
-                        var address = session.message.address;
-                        var msg = new builder.Message()
-                            .attachmentLayout(builder.AttachmentLayout.carousel)
-                            .address(address)
-                            .attachments(create_cards(body, session));
-                        session.endDialog(msg);
+                        if (body.length == 0) {
 
+                            session.endDialog("Sorry No Hotels!!");
+                        }
+                        else {
+                            create_cards(body, session, userdate, userloc);
+                            var address = session.message.address;
+                            var msg = new builder.Message()
+                                .attachmentLayout(builder.AttachmentLayout.carousel)
+                                .address(address)
+                                .attachments(create_cards(body, session));
+                            session.endDialog(msg);
+                        }
                     }
                 });
             }
@@ -74,16 +79,16 @@ module.exports = [
     }
 ];
 
-function create_cards(body, session_to_use,date,location) {
+function create_cards(body, session_to_use, date, location) {
     console.log(JSON.stringify(body));
     var crew = body;
     var cards = [];
     for (i = 0; i < crew.length; i++) {
-        
+
         var item = crew[i];
         var option = item.EmpId;
         var card = new builder.HeroCard(session_to_use)
-            .title( body[i].HotelName)
+            .title(body[i].HotelName)
             .subtitle("Hotel Address : " + body[i].HotelAddress)
             .images([
                 builder.CardImage.create(session_to_use, body[i].hotepic)
