@@ -84,7 +84,6 @@ module.exports = [
 
 ]
 function create_cards(body, session_to_use) {
-    console.log(JSON.stringify(body));
     var crew = body;
     var cards = [];
     var url;
