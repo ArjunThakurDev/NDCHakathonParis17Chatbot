@@ -102,7 +102,6 @@ function create_cards(body, session_to_use) {
             builder.CardAction.imBack(session_to_use, 'you have selected flight details for ' + body[i].UserID, 'flight for ' + body[i].FirstName)])
         cards.push(card);
     }
-    console.log(JSON.stringify(cards));
     return cards;
 }
 
