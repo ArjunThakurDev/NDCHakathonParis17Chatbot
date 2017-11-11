@@ -75,13 +75,12 @@ function create_cards(body, session_to_use, object) {
                 .images([
                     builder.CardImage.create(session_to_use, get_image_url(body[i].City))
                 ])
-                .buttons([ builder.CardAction.openUrl(session_to_use, "tel:" + body[i].ContactNum, "Call Hotel")]);
+                .buttons([builder.CardAction.openUrl(session_to_use, "tel:" + body[i].ContactNum, "Call Hotel")]);
             cards.push(card);
 
         }
 
     }
-    console.log(JSON.stringify(cards));
 
     return cards;
 }
