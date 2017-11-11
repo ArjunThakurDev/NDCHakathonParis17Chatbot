@@ -18,15 +18,15 @@ module.exports = [
             }
         }
 
-       
 
 
-console.log("End point URL is ");
-        console.log('http://ghbotapi.azurewebsites.net/sasusers/' + empid + '/' +object+'/null/null/');
+
+        console.log("End point URL is ");
+        console.log('http://ghbotapi.azurewebsites.net/sasusers/' + empid + '/' + object + '/null/null/');
 
         var offer_option = {
             method: 'GET',
-            url: 'http://ghbotapi.azurewebsites.net/sasusers/' + empid + '/' +object+'/null/null/',
+            url: 'http://ghbotapi.azurewebsites.net/sasusers/' + empid + '/' + object + '/null/null/',
             headers: {
                 'content-type': 'application/json'
             },
@@ -36,12 +36,12 @@ console.log("End point URL is ");
             if (error) {
                 console.log('Offeres are not saved....');
             } else {
-                
+
                 var address = session.message.address;
                 var msg = new builder.Message()
                     .attachmentLayout(builder.AttachmentLayout.carousel)
                     .address(address)
-                    .attachments(create_cards(body, session,object));
+                    .attachments(create_cards(body, session, object));
                 session.endDialog(msg);
 
             }
@@ -50,43 +50,40 @@ console.log("End point URL is ");
 
 ];
 
-function create_cards(body, session_to_use,object) {
-    console.log(JSON.stringify(body));
+function create_cards(body, session_to_use, object) {
     var crew = body;
     var cards = [];
     for (i = 0; i < crew.length; i++) {
 
         var item = crew[i];
         var option = item.EmpId;
-        if(object=="flight")
-        {
-        var card = new builder.HeroCard(session_to_use)
-            .title(body[i].Origin + " To " + body[i].Destination)
-            .subtitle("Flight: " + body[i].FlightNo + "Departing at : " + body[i].DepartureDate)
-            .images([
-                builder.CardImage.create(session_to_use, body[i].flightpic)
-            ])
-            .buttons([builder.CardAction.imBack(session_to_use, 'Flight Details for ' + body[i].FlightNo)]);
-            cards.push(card);
-            
-        }
-        else 
-        {
+        if (object == "flight") {
             var card = new builder.HeroCard(session_to_use)
-            .title( body[i].HotelName)
-            .subtitle("Hotel Address : " + body[i].HotelAddress)
-            .images([
-                builder.CardImage.create(session_to_use, get_image_url(body[i].City))
-            ])
-            .buttons([builder.CardAction.postBack(session_to_use, 'Hotel details for ' + body[i].HotelName, 'Click to find more')]);
+                .title(body[i].Origin + " To " + body[i].Destination)
+                .subtitle("Flight: " + body[i].FlightNo + "Departing at : " + body[i].DepartureDate)
+                .images([
+                    builder.CardImage.create(session_to_use, body[i].flightpic)
+                ])
+                .buttons([builder.CardAction.imBack(session_to_use, 'Flight Details for ' + body[i].FlightNo)]);
             cards.push(card);
-            
+
         }
-       
+        else {
+            var card = new builder.HeroCard(session_to_use)
+                .title(body[i].HotelName)
+                .subtitle("Hotel Address : " + body[i].HotelAddress)
+                .images([
+                    builder.CardImage.create(session_to_use, get_image_url(body[i].City))
+                ])
+                .buttons([builder.CardAction.postBack(session_to_use, 'Hotel details for ' + body[i].HotelName, 'Click to find more')]);
+            cards.push(card);
+
+        }
+
     }
     console.log(JSON.stringify(cards));
 
-   return cards;
+    return cards;
 }
 
 function get_image_url(code) {
