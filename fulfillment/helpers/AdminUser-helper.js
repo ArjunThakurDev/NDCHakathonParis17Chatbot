@@ -18,7 +18,7 @@ module.exports = [
             }
         }
 
-
+        console.log("Entities :" + JSON.stringify(entities));
 
 
         console.log("End point URL is ");
