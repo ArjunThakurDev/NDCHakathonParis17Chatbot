@@ -9,6 +9,7 @@ module.exports = [
         var empid = "null";
         var object = "null";
         var flighturl;
+        var myaddon = "";
         for (var i = 0, len = entities.length; i < len; i++) {
             if (entities[i].type === 'builtin.number') {
                 empid = entities[i].entity;
@@ -20,13 +21,20 @@ module.exports = [
 
         console.log("Entities :" + JSON.stringify(entities));
 
+        if (object.includes("flight")) {
+
+            myaddon = "flight";
+        }
+        else {
+            myaddon = "hotel";
+        }
 
         console.log("End point URL is ");
-        console.log('http://ghbotapi.azurewebsites.net/sasusers/' + empid + '/' + object + '/null/null/');
+        console.log('http://ghbotapi.azurewebsites.net/sasusers/' + empid + '/' + myaddon + '/null/null/');
 
         var offer_option = {
             method: 'GET',
-            url: 'http://ghbotapi.azurewebsites.net/sasusers/' + empid + '/' + object + '/null/null/',
+            url: 'http://ghbotapi.azurewebsites.net/sasusers/' + empid + '/' + myaddon + '/null/null/',
             headers: {
                 'content-type': 'application/json'
             },
