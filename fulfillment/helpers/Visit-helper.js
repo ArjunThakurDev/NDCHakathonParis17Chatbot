@@ -59,6 +59,7 @@ module.exports = [
                     if (error) {
                         console.log('Offeres are not saved....');
                     } else {
+                        console.log("Length:" + body.length);
                         if (body.length == 0) {
                             session.endDialog("No Records Found!!!");
                         }
