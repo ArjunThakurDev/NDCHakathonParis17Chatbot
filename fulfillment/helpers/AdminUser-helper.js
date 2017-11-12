@@ -44,13 +44,18 @@ module.exports = [
             if (error) {
                 console.log('Offeres are not saved....');
             } else {
+                if (body.length == 0) {
+                    session.endDialog("No Records Found!!!");
+                }
+                else {
 
-                var address = session.message.address;
-                var msg = new builder.Message()
-                    .attachmentLayout(builder.AttachmentLayout.carousel)
-                    .address(address)
-                    .attachments(create_cards(body, session, myaddon));
-                session.endDialog(msg);
+                    var address = session.message.address;
+                    var msg = new builder.Message()
+                        .attachmentLayout(builder.AttachmentLayout.carousel)
+                        .address(address)
+                        .attachments(create_cards(body, session, myaddon));
+                    session.endDialog(msg);
+                }
 
             }
         });
