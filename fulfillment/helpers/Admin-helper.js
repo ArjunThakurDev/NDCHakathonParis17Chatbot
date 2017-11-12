@@ -93,7 +93,7 @@ function create_cards(body, session_to_use) {
         var option = item.EmpId;
 
         var card = new builder.HeroCard(session_to_use)
-            .title(body[i].FirstName + " " + body[i].LastName)
+            .title(body[i].FirstName + " " + body[i].MiddleName + " " + body[i].LastName)
             .subtitle("Role : " + body[i].Role + "\n" + "Flight status : " + body[i].CompletionStatus)
             .images([
                 builder.CardImage.create(session_to_use, body[i].ProfilePic),
