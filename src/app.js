@@ -19,7 +19,7 @@ const CALLBACK_URL = process.env.CALLBACK_URL || 'https://luisbotsas.azurewebsit
 const MICROSOFT_APP_ID = process.env.MICROSOFT_APP_ID || '8fff4c9b-acb4-46f5-8727-f01d908b952c';
 const API_AI_TOKEN = process.env.API_AI_TOKEN || 'api_ai';
 const MICROSOFT_APP_PASSWORD = process.env.MICROSOFT_APP_PASSWORD || '4yb1Mhemjc6Yz7M4z0Mvp9S';
-const LUIS_ENDPOINT = process.env.LUIS_ENDPOINT || 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/d95339f5-4f1b-46c7-82ce-25c0a2cf8348?subscription-key=900921ac3fac4a9ebe6dd04f475ed898&verbose=true&timezoneOffset=0';
+const LUIS_ENDPOINT = process.env.LUIS_ENDPOINT || 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a3392223-662a-4380-90f2-b1fc0008762b?subscription-key=0acd8e3d9e334c4794d07eaf92805539&verbose=true&timezoneOffset=0';
 const FB_ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN || 'EAABsIS7VNNYBAMgrZCdZBDvftYjdEIhZBURGO2mdZAzdj5cHWTx3Kmg22zGkuwNZCLaIctbZAOlKv5JP0dLOgY7WejlYC8E4GhpTYpfQMaT5s6mOuciqeCz21VL4TgOfosgVh2ZBm9n2fvzAGKbQQmbXaAfEWMYDz0VU0R2I8miqgZDZD';
 
 /*
@@ -132,14 +132,12 @@ bot.dialog('/', intents);
 
 intents.onDefault((session, args) => {
     savedAddress = session.message.address;
-    session.send("This is my bot");
-
     var fulfillment = builder.EntityRecognizer.findEntity(args.entities, 'fulfillment');
     if (fulfillment) {
         var speech = fulfillment.entity;
         console.log(`Address of the user is ${JSON.stringify(session.message)}`);
         session.send(speech);
     } else {
-        session.send('Sorry...not sure how to respond to that');
+        session.send('Sorry...not sure how to respond to that. Please try again');
     }
 });
