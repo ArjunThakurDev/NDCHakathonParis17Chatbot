@@ -77,7 +77,7 @@ function create_cards(body, session_to_use, object) {
                 .images([
                     builder.CardImage.create(session_to_use, body[i].flightpic)
                 ])
-                .buttons([builder.CardAction.imBack(session_to_use, 'Flight Details for ' + body[i].FlightNo)]);
+                .buttons([builder.CardAction.imBack(session_to_use,"tel:" + "+919910665326" ,'Call for Qauery')]);
             cards.push(card);
 
         }
