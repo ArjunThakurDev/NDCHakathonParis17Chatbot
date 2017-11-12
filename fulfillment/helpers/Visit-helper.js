@@ -1,13 +1,13 @@
 var builder = require("botbuilder");
 var request = require("request");
-var Adminintent =require('../helpers/Admin-helper');
+var Adminintent = require('../helpers/Admin-helper');
 module.exports = [
     (session, args, next) => {
         var entities = args.entities;
         var option_num = 0;
         var useridlocal;
-        var userdate="null";
-        var userloc="null";
+        var userdate = "null";
+        var userloc = "null";
         var flighturl;
         for (var i = 0, len = entities.length; i < len; i++) {
             if (entities[i].type === 'builtin.datetimeV2.date') {
@@ -16,13 +16,13 @@ module.exports = [
             else if (entities[i].type === 'Location') {
                 userloc = entities[i].resolution.values[0];
             }
-  /*           else if (entities[i].type === 'Users') {
-                Adminintent.admin(session,args,next);
-
-            } */
+            /*           else if (entities[i].type === 'Users') {
+                          Adminintent.admin(session,args,next);
+          
+                      } */
         }
-        
-      
+
+
 
         var offer_option = {
             url: ' http://ghbotapi.azurewebsites.net/sasusers/',
@@ -39,17 +39,17 @@ module.exports = [
                 throw new Error(error);
 
             } else {
-               
+
                 for (var i = 0, len = body.length; i < len; i++) {
                     if (body[i].FirstName + body[i].LastName === session.userData.first_name + session.userData.last_name) {
                         useridlocal = body[i].UserID;
                     }
                 }
                 console.assert("user id is " + useridlocal);
-            console.log('http://ghbotapi.azurewebsites.net/sasusers/' + useridlocal + '/flight/'+userloc+'/'+userdate);
+                console.log('http://ghbotapi.azurewebsites.net/sasusers/' + useridlocal + '/flight/' + userloc + '/' + userdate);
                 var offer_option = {
                     method: 'GET',
-                    url: 'http://ghbotapi.azurewebsites.net/sasusers/' + useridlocal + '/flight/'+userloc+'/'+userdate,
+                    url: 'http://ghbotapi.azurewebsites.net/sasusers/' + useridlocal + '/flight/' + userloc + '/' + userdate,
                     headers: {
                         'content-type': 'application/json'
                     },
@@ -59,13 +59,18 @@ module.exports = [
                     if (error) {
                         console.log('Offeres are not saved....');
                     } else {
-                        create_cards(body, session,userdate,userloc);
-                        var address = session.message.address;
-                        var msg = new builder.Message()
-                            .attachmentLayout(builder.AttachmentLayout.carousel)
-                            .address(address)
-                            .attachments(create_cards(body, session));
-                        session.endDialog(msg);
+                        if (body.length == 0) {
+                            session.endDialog("No Records Found!!!");
+                        }
+                        else {
+                            create_cards(body, session, userdate, userloc);
+                            var address = session.message.address;
+                            var msg = new builder.Message()
+                                .attachmentLayout(builder.AttachmentLayout.carousel)
+                                .address(address)
+                                .attachments(create_cards(body, session));
+                            session.endDialog(msg);
+                        }
 
                     }
                 });
@@ -74,12 +79,12 @@ module.exports = [
     }
 ];
 
-function create_cards(body, session_to_use,date,location) {
-    
+function create_cards(body, session_to_use, date, location) {
+
     var crew = body;
     var cards = [];
     for (i = 0; i < crew.length; i++) {
-        
+
         var item = crew[i];
         var option = item.EmpId;
         var card = new builder.HeroCard(session_to_use)
@@ -91,7 +96,7 @@ function create_cards(body, session_to_use,date,location) {
             .buttons([builder.CardAction.imBack(session_to_use, 'Flight Details for ' + body[i].FlightNo)]);
         cards.push(card);
     }
-    
+
     return cards;
 }
 
