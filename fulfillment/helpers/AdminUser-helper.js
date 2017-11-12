@@ -73,7 +73,7 @@ function create_cards(body, session_to_use, object) {
         if (object == "flight") {
             var card = new builder.HeroCard(session_to_use)
                 .title(body[i].Origin + " To " + body[i].Destination)
-                .subtitle("Flight: " + body[i].FlightNo + "Departing at : " + body[i].DepartureDate)
+                .subtitle("Flight: " + body[i].FlightNo + " Departing at : " + body[i].DepartureDate)
                 .images([
                     builder.CardImage.create(session_to_use, body[i].flightpic)
                 ])
