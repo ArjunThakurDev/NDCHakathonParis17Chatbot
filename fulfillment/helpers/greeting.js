@@ -12,6 +12,9 @@ module.exports = [
             },
             "Get Hotel details": {
                 value: "show me my hotel details",
+            },
+            "Get All User details": {
+                value: "show all users details"
             }
         };
 
@@ -30,18 +33,6 @@ module.exports = [
                 throw new Error(error);
 
             } else {
-                for (var i = 0, len = body.length; i < len; i++) {
-                    if (body[i].FirstName + body[i].LastName === session.userData.first_name + session.userData.last_name) {
-                        userrole = body[i].Role;
-                    }
-                    if (userrole === "Admin") {
-
-                        userdetails['Get All User details'] = {
-                            value: "show all users details",
-                        };
-                    }
-                }
-
                 session.send('Welcome to TCS Aider help App');
                 builder.Prompts.choice(session, "Please choose 1 of the given options", userdetails);
                 next();
