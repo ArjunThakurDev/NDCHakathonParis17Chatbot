@@ -90,11 +90,11 @@ function create_cards(body, session_to_use, date, location) {
         var option = item.EmpId;
         var card = new builder.HeroCard(session_to_use)
             .title(body[i].Origin + " To " + body[i].Destination)
-            .subtitle("Flight: " + body[i].FlightNo + "Departing at : " + body[i].DepartureDate)
+            .subtitle("Flight: " + body[i].FlightNo + " Departing at : " + body[i].DepartureDate)
             .images([
                 builder.CardImage.create(session_to_use, body[i].flightpic)
             ])
-            .buttons([builder.CardAction.imBack(session_to_use, 'Flight Details for ' + body[i].FlightNo)]);
+            .buttons([builder.CardAction.openUrl(session_to_use,"tel:" + "+919910665326" ,'Call for Query')]);
         cards.push(card);
     }
 
